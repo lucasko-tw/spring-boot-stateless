@@ -42,7 +42,7 @@ docker run --name my-redis  -p 6379:6379 -d redis
 2. 由於兩個web app的session都是儲存在 redis中，因此這兩個web app都是屬於 stateless的 web app.
 
 ```sh
-cd spring-boot-stateless/
+cd spring-boot-
 
 
 docker run --name app1 --link my-mysql:my-mysql --link my-redis:my-redis -it -v ~/.m2:/root/.m2  -v $PWD:/opt -p8081:8080 -d lucasko/springboot
@@ -56,7 +56,7 @@ docker run --name app2 --link my-mysql:my-mysql --link my-redis:my-redis -it -v 
 在app1(8081 port)註冊一組帳號，帳號資訊會儲存在 MySQL中的 user table
 
 ```sh
-curl  --header "Content-Type: application/json" -d '{ "firstname" : "Lucas",  "lastname" : "Ko",  "account" : "lucasko.tw@test.com" , "password" : "123456789"}' http://localhost:8081/stateless/api/pub/signup
+curl  --header "Content-Type: application/json" -d '{ "firstname" : "Lucas",  "lastname" : "Ko",  "account" : "lucasko.tw@test.com" , "password" : "123456789"}' http://localhost:8081/api/pub/signup
 ```
 
 
@@ -66,7 +66,7 @@ curl  --header "Content-Type: application/json" -d '{ "firstname" : "Lucas",  "l
 
 ```sh
 
-curl -v  --header "Content-Type: application/json" -d '{  "account" : "lucasko.tw@test.com" , "password" : "123456789"}' http://localhost:8081/stateless/api/pub/login
+curl -v  --header "Content-Type: application/json" -d '{  "account" : "lucasko.tw@test.com" , "password" : "123456789"}' http://localhost:8081/api/pub/login
 
 *   Trying 127.0.0.1...
 * TCP_NODELAY set
@@ -103,7 +103,7 @@ curl -v  --header "Content-Type: application/json" -d '{  "account" : "lucasko.t
 2. 雖然網站是分別架設在 8081 port 與 8082 port，但是SESSION是架在Redis上共用的。
 
 ```
- curl  --cookie "SESSION=7914d879-c6ef-4764-bf7e-ed27ff468516"   http://localhost:8082/stateless/api/user/profile/get
+ curl  --cookie "SESSION=7914d879-c6ef-4764-bf7e-ed27ff468516"   http://localhost:8082/api/user/profile/get
  
 {"firstname":"Lucas","role":"ROLE_USER","account":"lucasko.tw@test.com","lastname":"Ko"}
 ```
