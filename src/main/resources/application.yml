@@ -1,0 +1,11 @@
+spring:
+  http: 
+    encoding:
+      enabled: true
+      charset: UTF-8
+      force: true
+      
+
+server:
+  context-path: /@app.context.name@
+
